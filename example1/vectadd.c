@@ -24,7 +24,7 @@ const char* programSource =
 "                                                        \n"
 "    //Add the corresponding locations of                \n"
 "    // 'A' and 'B', and store the result in 'C'.        \n"
-"    C[idx] = A[idx] * B[idx];                           \n"
+"    C[idx] = A[idx] + B[idx];                           \n"
 "}                                                       \n"
 ;
 
@@ -51,8 +51,8 @@ int main() {
     //Initialize the input data
     for(int i=0; i < elements; i++)
     {
-        A[i] =  i;
-        B[i] =  i;
+        A[i] =  i+1;
+        B[i] =  i+1;
     }
 
     //Use this to check the output of each API call
@@ -308,7 +308,7 @@ int main() {
 
 #ifdef DEBUG
      for(int i = 0; i < elements; i++) {
-         if(C[i] != i / i) {
+         if(C[i] != (i+1) + (i + 1)) {
              result = false;
              error_elem_pos  = i;
              error_elem_val = C[i];
