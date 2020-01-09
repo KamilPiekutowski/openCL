@@ -7,7 +7,7 @@
 #include <CL/cl.h>
 
 #define MEGABYTE 1048576
-//#define DEBUG
+#define DEBUG
 
 //OpenCL kernel to perform an element wise
 //add of two arrays
@@ -308,7 +308,7 @@ int main() {
 
 #ifdef DEBUG
      for(int i = 0; i < elements; i++) {
-         if(C[i] != i * i) {
+         if(C[i] != i / i) {
              result = false;
              error_elem_pos  = i;
              error_elem_val = C[i];
