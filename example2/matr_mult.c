@@ -20,7 +20,7 @@ const char* programSource =
 "            int widthB,                                 \n"
 "            int heightB,                                \n"
 "            __global float *inputA,                     \n"
-"            __global float *inputB                      \n"
+"            __global float *inputB)                     \n"
 "{                                                       \n"
 "                                                        \n"
 "    //Get global position in Y direction                \n"
@@ -28,12 +28,14 @@ const char* programSource =
 "    //Get global position in X direction                \n"
 "    int col = get_global_id(0);                         \n"
 "                                                        \n"
-"    //Calculate the result of one element iin Matrix C  \n"
-"    //for(int i=0; i < widthA; i++) {                     \n"
-"    //  sum += inputA[row*widthA+i]*inputB[i*widthB+col]; \n"
-"    //}                                                   \n"
+"    float sum = 0.0f;                                   \n"
 "                                                        \n"
-"    outputC[row*widthB+col] = 99//sum;                  \n"
+"    //Calculate the result of one element iin Matrix C  \n"
+"    for(int i=0; i < widthA; i++) {                     \n"
+"      sum += inputA[row*widthA+i]*inputB[i*widthB+col]; \n"
+"    }                                                   \n"
+"                                                        \n"
+"    outputC[row*widthB+col] = sum;                      \n"
 "}                                                       \n"
 ;
 
@@ -65,8 +67,8 @@ int main() {
     //Initialize the input data
     for(int i=0; i < elements; i++)
     {
-        A[i] = (float)  2;
-        B[i] = (float)  3;
+        A[i] = (float)  i;
+        B[i] = (float)  i+1;
     }
 
     //Use this to check the output of each API call
