@@ -40,10 +40,10 @@ const char* programSource =
 ;
 
 
-#define WIDTH_A  2
-#define HEIGHT_A 2
-#define WIDTH_B  2
-#define HEIGHT_B 2
+#define WIDTH_A  4
+#define HEIGHT_A 4
+#define WIDTH_B  4
+#define HEIGHT_B 4
 
 int main() {
     //This code executes on the OpenGL host
@@ -67,9 +67,25 @@ int main() {
     //Initialize the input data
     for(int i=0; i < elements; i++)
     {
-        A[i] = (float)  i;
-        B[i] = (float)  i+1;
+         A[i] = (float)  i;
+         printf("[%g]", A[i]);
+         if(i%WIDTH_A == WIDTH_A-1){
+             printf("\n");
+         }
     }
+
+    printf("\n");
+
+    for(int i=0; i < elements; i++)
+    {
+         B[i] = (float)  i+1;
+         printf("[%g]", B[i]);
+         if(i%WIDTH_A == WIDTH_A-1){
+             printf("\n");
+         }
+    }
+
+    printf("\n");
 
     //Use this to check the output of each API call
     cl_int status;
@@ -348,10 +364,12 @@ int main() {
 
      for(int i = 0; i < elements; i++) {
          printf("[%g]", C[i]);
-         if(i%2 == 1){
+         if(i%WIDTH_A == WIDTH_A-1){
              printf("\n");
          }
      }
+
+    printf("\n");
 
     //------------------------------------------------------
     // STEP 13: Release OpenCL resources
