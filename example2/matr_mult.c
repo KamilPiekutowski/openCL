@@ -40,10 +40,10 @@ const char* programSource =
 ;
 
 
-#define WIDTH_A  4
-#define HEIGHT_A 4
-#define WIDTH_B  4
-#define HEIGHT_B 4
+#define WIDTH_A  16
+#define HEIGHT_A 16
+#define WIDTH_B  16
+#define HEIGHT_B 16
 
 int main() {
     //This code executes on the OpenGL host
@@ -110,6 +110,7 @@ int main() {
     status = clGetPlatformIDs(numPlatforms, platforms,
                NULL);
     
+    printf("Detected platforms: %d\n", numPlatforms);
 
     //------------------------------------------------------
     //STEP 2: Discover and initialize the devices
@@ -121,7 +122,7 @@ int main() {
     //devices present
     status = clGetDeviceIDs(
         platforms[0],
-        CL_DEVICE_TYPE_ALL,
+        CL_DEVICE_TYPE_GPU,
         0,
         NULL,
         &numDevices);
@@ -318,8 +319,8 @@ int main() {
     //Define an index space (global work size) of work
     //items for execution. A workgroup size (local worksize)
     //is not required, but can be used.
-    size_t globalWorkSize[1];
-    globalWorkSize[0] = elements;
+    size_t localWorkSize[2] = {WIDTH_A, HEIGHT_A};
+    size_t globalWorkSize[2] = {WIDTH_B, HEIGHT_B};
 
     //------------------------------------------------------
     // STEP 11: Enqueue the kernel for execution
@@ -331,10 +332,10 @@ int main() {
     status = clEnqueueNDRangeKernel(
         cmdQueue,
         kernel,
-        1,
+        2,
         NULL,
         globalWorkSize,
-        NULL,
+        localWorkSize,
         0,
         NULL,
         NULL);
